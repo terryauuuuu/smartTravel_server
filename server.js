@@ -27,6 +27,17 @@ var dataSet = [
 		'fromDate': '02Jan19 15:45',
 		'toDate': '02Jan19 18:20',
 		'PaggaeAllow': '32kg',
+		'luggagePic': [
+			{
+			'picid': '0',
+			'path': 'public/pic1.jpg'
+			},
+			{
+			'picid': '0',
+			'path': 'public/pic2.jpg'
+			}
+
+		],
 		'luggage':[{
 			'luggageID' : 1,
 			'weight': 10,
@@ -333,7 +344,7 @@ router.route('/sensor/:sensorID/:luggageID')
 				break;
 		}
 		
-		luggageList = currentUser.trip.filter(
+		luggageList = dataset[0].trip.filter(
 				y => y.luggage.filter(
 					z => z.luggageID ==req.params.luggageID)
 				)
@@ -343,7 +354,7 @@ router.route('/sensor/:sensorID/:luggageID')
 		if (tripID !== undefined){
 			var i=0, j=0,k=0, indx=[];
 			for ( i=0; i<dataSet.length; i++){
-				if (dataSet[i]==currentUser){
+				if (dataSet[i]==dataset[0]){
 					for ( j=0; j<dataSet[i].trip.length; j++){
 						if (dataSet[i].trip[j].tripID==tripID){
 							for ( k=0; k<dataSet[i].trip[j].luggage.length; k++){
