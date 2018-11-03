@@ -20,7 +20,7 @@ var dataSet = [
 		'tripNumber' : 'CX5810',
 		'Class' : 'Economy',
 		'from': 'Berlin',
-		'fromShost': 'BER',
+		'fromShort': 'BER',
 		'to': 'Hong Kong',
 		'toShort': 'HKG',
 		'toPicture' : 'src/src/hongkong.jpg',
@@ -67,7 +67,7 @@ var dataSet = [
 			'tripNumber' : 'CX5710',
 			'Class' :'Business',
 			'from': 'Hong Kong',
-			'fromShost': 'HKG',
+			'fromShort': 'HKG',
 			'to': 'Beijing',
 			'toShort': 'PEK',
 			'toPicture' : 'src/src/beijing.jpg',
@@ -110,7 +110,103 @@ var dataSet = [
 				]
 				}]
 			}
-		]
+		],
+		'tripHistory': [{
+			'tripID': 2,
+			'tripNumber' : 'CX6620',
+			'Class' : 'Business',
+			'from': 'New York',
+			'fromShort': 'NYC',
+			'to': 'Hong Kong',
+			'toShort': 'HKG',
+			'toPicture' : 'src/src/hongkong.jpg',
+			'fromDate': '02Jan18 15:45',
+			'toDate': '02Jan18 18:20',
+			'PaggaeAllow': '32kg',
+			'luggage':[{
+				'luggageID' : 11,
+				'weight': 10,
+				'status': 'on belt',
+				'location': 'Hong Kong International Airport',
+				'timeline':[
+					{
+						'time': "02Jan19 14:20",
+						'details': "Offboard at HKG"
+					},{
+						'time': "02Jan19 12:40",
+						'details': "Onboard at BER"
+					},{
+						'time': "02Jan19 11:27",
+						'details': "Checked at BER"
+					}
+				]
+				},{
+				'luggageID' : 52,
+				'weight': 23,
+				'status': 'onBoard',
+				'location': 'Berlin International Airport',
+				'timeline':[
+					{
+						'time': "02Jan19 14:20",
+						'details': "Offboard at HKG"
+					},{
+						'time': "02Jan19 12:40",
+						'details': "Onboard at BER"
+					},{
+						'time': "02Jan19 11:27",
+						'details': "Checked at BER"
+					}
+				]
+				}]
+			},{
+				'tripID': 3,
+				'tripNumber' : 'CX5710',
+				'Class' :'Business',
+				'from': 'Hong Kong',
+				'fromShort': 'HKG',
+				'to': 'Beijing',
+				'toShort': 'PEK',
+				'toPicture' : 'src/src/beijing.jpg',
+				'fromDate': '02Jan19 15:45',
+				'toDate': '02Jan19 18:20',
+				'PaggaeAllow': '32kg',
+				'luggage':[{
+					'luggageID' : 33,
+					'weight': 5,
+					'status': 'onBoard',
+					'location': 'Hong Kong International Airport',
+					'timeline':[
+						{
+							'time': "02Jan19 18:20",
+							'details': "Offboard at PEK"
+						},{
+							'time': "02Jan19 15:40",
+							'details': "Onboard at HKG"
+						},{
+							'time': "02Jan19 13:27",
+							'details': "Checked at HKG"
+						}
+					]
+					},{
+					'luggageID' : 44,
+					'weight': 22,
+					'status': 'onBoard',
+					'location': 'Hong Kong International Airport',
+					'timeline':[
+						{
+							'time': "02Jan19 18:20",
+							'details': "Offboard at PEK"
+						},{
+							'time': "02Jan19 15:40",
+							'details': "Onboard at HKG"
+						},{
+							'time': "02Jan19 13:27",
+							'details': "Checked at HKG"
+						}
+					]
+					}]
+				}
+			]
 	}
 ]
 
@@ -126,10 +222,14 @@ var sensorSet = [{
 },{
 	'sensorID' : 4,
 	'status': 'On Belt'
+},{
+	'sensorID' : 5,
+	'status': 'Missing'
 }]
 
+var notification = []
 var currentUser;
-
+notification.push({type: 'warning', content: 'The Luggage is checked in!<br>Check the details inside the app!'})
 app.use(morgan('dev')); // log requests to the console
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -144,25 +244,69 @@ router.get('/', function(req, res) {
 	// res.json({message:'this is api'});
 });
 
-router.get('/background', function(req, res) {
-	// res.sendFile(path.join(__dirname+'/index.html'));
-	res.send(url('app/CathayBG.png'));
-});
+
+router.get('/notification', function(req,res){
+	if (notification.length !=0){
+		res.json(notification);
+		notification = [];
+	}else{	
+	}
+})
+
 
 //login --if login succeed, return the trip info
 	//  --if fail, return false
 router.get('/login/:user/:password',function(req,res){
 	getUser = dataSet.filter(x=>x.user == req.params.user && x.password == req.params.password)
 	currentUser = getUser.length != 0 ? getUser[0] : false
-	res.json({result: getUser.length != 0 ? getUser[0].trip : false})
+	res.json({result: getUser.length != 0 ? getUser[0].userID : false})
 })
 
 //get the specific trip info
-router.route('/trip/:tripID')
+router.route('/trip/:userID/:tripID')
 	.get(function(req,res){
-		trip = currentUser.filter(x=> x.trip.tripID == req.params.tripID );
-		res.json(trip.length != 0 ? trip[0]: '');
+		user = dataSet.filter(x=> x.userID == req.params.userID);
+		trips = user[0].trip
+		trip = trips.filter(x=>x.tripID== req.params.tripID)
+
+		res.json(trip.length != 0 ? trip[0]: undefined);
 	});
+
+//get the specific trip info
+router.route('/tripHistory/:userID/:tripID')
+.get(function(req,res){
+	user = dataSet.filter(x=> x.userID == req.params.userID);
+	trips = user[0].tripHistory
+	trip = trips.filter(x=>x.tripID== req.params.tripID)
+
+	res.json(trip.length != 0 ? trip[0]: undefined);
+});
+
+//get all trips of the user
+router.route('/trips/:userID')
+.get(function(req,res){
+	user = dataSet.filter(x=> x.userID == req.params.userID);
+	if (user[0] !== undefined){
+		trip =  user[0].trip;
+		res.json(trip.length != 0 ? trip: undefined);
+	}else{
+		res.json(undefined);
+	}
+});
+
+//get all trips history of the user
+router.route('/tripsHistory/:userID')
+.get(function(req,res){
+	user = dataSet.filter(x=> x.userID == req.params.userID);
+	if (user[0] !== undefined){
+		trip =  user[0].tripHistory;
+		res.json(trip.length != 0 ? trip: undefined);
+	}else{
+		res.json(undefined);
+	}
+});
+
+
 
 //when the sensor detect the RFID, show the 
 	//change status of the luggage based on the sensor location
@@ -171,6 +315,23 @@ router.route('/sensor/:sensorID/:luggageID')
 		//get the sensor status
 		sensorStatus = sensorSet.filter(x => x.sensorID == req.params.sensorID);
 		sensorStatus = sensorStatus.length !=0 ? sensorStatus[0].status : undefined;
+		
+		switch(luggageID) {
+			case 1:
+				notification.push({type: 'warning', content: 'The Luggage is checked in!<br>Check the details inside the app!'})
+				break;
+			case 2:
+				notification.push({type: 'warning', content: 'The Luggage is on board!<br>Check the details inside the app!'})
+				break;
+			case 3:
+				notification.push({type: 'warning', content: 'The Luggage is off board!<br>Please wait a moment before it proseed!!'})
+				break;
+			case 4: 
+				notification.push({type: 'warning', content: 'The Luggage is on the belt!<br>Keep track the belt and get your luggage back!!'})
+				break;
+			default:
+				break;
+		}
 		
 		luggageList = currentUser.trip.filter(
 				y => y.luggage.filter(
@@ -196,9 +357,8 @@ router.route('/sensor/:sensorID/:luggageID')
 					}
 				}
 			}
-		}	
+		}
 	});
-
 
 // REGISTER OUR ROUTES -------------------------------
 app.use('/api', router);
