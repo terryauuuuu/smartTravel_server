@@ -1,5 +1,6 @@
 var express    = require('express');
 var bodyParser = require('body-parser');
+var path    = require("path");
 var app        = express();
 var morgan     = require('morgan');
 var cors = require('cors');
@@ -28,12 +29,36 @@ var dataSet = [
 			'luggageID' : 1,
 			'weight': 10,
 			'status': 'onBoard',
-			'location': 'Berlin International Airport'
+			'location': 'Berlin International Airport',
+			'timeline':[
+				{
+					'time': "02Jan19 14:20",
+					'details': "Offboard at HKG"
+				},{
+					'time': "02Jan19 12:40",
+					'details': "Onboard at BER"
+				},{
+					'time': "02Jan19 11:27",
+					'details': "Checked at BER"
+				}
+			]
 			},{
 			'luggageID' : 2,
 			'weight': 23,
 			'status': 'onBoard',
-			'location': 'Berlin International Airport'
+			'location': 'Berlin International Airport',
+			'timeline':[
+				{
+					'time': "02Jan19 14:20",
+					'details': "Offboard at HKG"
+				},{
+					'time': "02Jan19 12:40",
+					'details': "Onboard at BER"
+				},{
+					'time': "02Jan19 11:27",
+					'details': "Checked at BER"
+				}
+			]
 			}]
 		},{
 			'tripID': 1,
@@ -51,12 +76,36 @@ var dataSet = [
 				'luggageID' : 3,
 				'weight': 5,
 				'status': 'onBoard',
-				'location': 'Hong Kong International Airport'
+				'location': 'Hong Kong International Airport',
+				'timeline':[
+					{
+						'time': "02Jan19 18:20",
+						'details': "Offboard at PEK"
+					},{
+						'time': "02Jan19 15:40",
+						'details': "Onboard at HKG"
+					},{
+						'time': "02Jan19 13:27",
+						'details': "Checked at HKG"
+					}
+				]
 				},{
 				'luggageID' : 4,
 				'weight': 22,
 				'status': 'onBoard',
-				'location': 'Hong Kong International Airport'
+				'location': 'Hong Kong International Airport',
+				'timeline':[
+					{
+						'time': "02Jan19 18:20",
+						'details': "Offboard at PEK"
+					},{
+						'time': "02Jan19 15:40",
+						'details': "Onboard at HKG"
+					},{
+						'time': "02Jan19 13:27",
+						'details': "Checked at HKG"
+					}
+				]
 				}]
 			}
 		]
@@ -89,7 +138,13 @@ var router = express.Router();
 
 // http://localhost:8080/api
 router.get('/', function(req, res) {
-	res.json({message:'this is api'});
+	res.sendFile(path.join(__dirname+'/index.html'));
+	// res.json({message:'this is api'});
+});
+
+router.get('/background', function(req, res) {
+	// res.sendFile(path.join(__dirname+'/index.html'));
+	res.send('app/CathayBG.png');
 });
 
 //login --if login succeed, return the trip info
