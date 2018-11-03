@@ -4,6 +4,8 @@ var path    = require("path");
 var app        = express();
 var morgan     = require('morgan');
 var cors = require('cors');
+app.use(express.static('app'))
+app.use('/static', express.static('app'))
 
 app.use(cors());
 app.options('*', cors());
@@ -144,7 +146,7 @@ router.get('/', function(req, res) {
 
 router.get('/background', function(req, res) {
 	// res.sendFile(path.join(__dirname+'/index.html'));
-	res.send('app/CathayBG.png');
+	res.send(url('app/CathayBG.png'));
 });
 
 //login --if login succeed, return the trip info

@@ -9,54 +9,95 @@
   <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 </head>
 
-<body style = "background-image: url('app/CathayBG.png')";>
-  <div style="margin:10px;">
-    <div class="jumbotron" style="padding:100px; ">
+<body style = "background-image: url('/static/CathayBG.png');background-size:100%;";>
+  <div style="margin:100px;">
+     <div  style="margin:200px 0px 0px 0px; background-color:rgba(0, 0, 0, 0.1);padding:100px 50px 100px 50px">
+            <span class="font-weight-light" style="color:white;font-size: 70px;" >Status: </span>
+            <span id="console-event" class="font-weight-light" style="color:white;font-size: 70px;font-style: italic;" >  </span>
+     </div>
+    <div  style="margin:400px 0px 0px 0px; background-color:rgba(0, 0, 0, 0.3);padding:100px 50px 100px 50px">
 
-            <div class = "row">
+            <div class = "row" style="margin:50px 0px 0px 0px;">
                     <div class="col-sm-6">
-                            <h1>Check In </h1>
+                            <h1 class="font-weight-light" style="color:white;font-size: 50px;" >Check In </h1>
                     </div>
                     <div class="col-sm-6">
-                        <a href="/sitemap" style = "margin: 0px 0px 0px 0px">
-                            <input  type="checkbox" checked data-toggle="toggle" data-width="200" data-height="75">
+                        <a href="/sensor/1/1" style = "margin: 0px 0px 0px 0px">
+                            <input id="toggle-event-1" type="checkbox" data-toggle="toggle" data-width="300" data-height="100">
                         </a>
                     </div>
                 </div>
 
-                <div class = "row">
+                <div class = "row" style="margin:50px 0px 0px 0px;">
                         <div class="col-sm-6">
-                                <h1>Check In </h1>
+                                <h1 class="font-weight-light" style="color:white;font-size: 50px;" >On Board </h1>
                         </div>
                         <div class="col-sm-6">
                             <a href="/sitemap" style = "margin: 0px 0px 0px 0px">
-                                <input  type="checkbox" checked data-toggle="toggle" data-width="200" data-height="75">
+                                <input id="toggle-event-2" type="checkbox"  data-toggle="toggle" data-width="300" data-height="100">
                             </a>
                         </div>
                     </div>
 
-                    <div class = "row">
-                            <div class="col-sm-6">
-                                    <h1>Off Board </h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <a href="/sitemap" style = "margin: 0px 0px 0px 0px">
-                                    <input  type="checkbox" checked data-toggle="toggle" data-width="200" data-height="75">
-                                </a>
-                            </div>
-                        </div>
+            <div class = "row" style="margin:50px 0px 0px 0px;">
+                    <div class="col-sm-6">
+                            <h1 class="font-weight-light" style="color:white;font-size: 50px;" >Offoard </h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="/sitemap" style = "margin: 0px 0px 0px 0px">
+                            <input id="toggle-event-3" type="checkbox"  data-toggle="toggle" data-width="300" data-height="100">
+                        </a>
+                    </div>
+                </div>
 
-                        <div class = "row">
-                                <div class="col-sm-6">
-                                        <h1>Check In </h1>
-                                </div>
-                                <div class="col-sm-6">
-                                    <a href="/sitemap" style = "margin: 0px 0px 0px 0px">
-                                        <input  type="checkbox" checked data-toggle="toggle" data-width="200" data-height="75">
-                                    </a>
-                                </div>
-                            </div>
+                <div class = "row" style="margin:50px 0px 0px 0px;">
+                        <div class="col-sm-6">
+                                <h1 class="font-weight-light" style="color:white;font-size: 50px;" >Belt On </h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="/sitemap" style = "margin: 0px 0px 0px 0px">
+                                <input id="toggle-event-4" type="checkbox"  data-toggle="toggle" data-width="300" data-height="100">
+                            </a>
+                        </div>
+                    </div>
     </div>
   </div>
 </body>
+
+<script>
+        $(function() {
+            $('#toggle-event-1').change(function() {
+            $('#console-event').html("Checked In")
+            sendRequest("/sensor/1/1");
+          })
+
+            $('#toggle-event-2').change(function() {
+            $('#console-event').html("On Board")
+            sendRequest("/sensor/2/1");
+          })
+
+            $('#toggle-event-3').change(function() {
+            $('#console-event').html("Off Board")
+            sendRequest("/sensor/3/1");
+          })
+
+            $('#toggle-event-4').change(function() {
+            $('#console-event').html("On Belt")
+            sendRequest("/sensor/4/1");
+          })
+        })
+        
+    function sendRequest(link) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("demo").innerHTML = this.responseText;
+        }
+        };
+        xhttp.open("GET", "/api" + link, true);
+        xhttp.send();
+    }
+
+</script>
+
 </html>
