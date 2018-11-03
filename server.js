@@ -12,6 +12,7 @@ var dataSet = [
 			'tripID': 0,
 			'from': 'BER',
 			'to': 'HK',
+			'toPicture' : 'src/src/beijing.jpg',
 			'fromDate': '2018-10-3 19:45',
 			'toDate': '2018-10-4 10:45',
 			'luggage':[
@@ -30,6 +31,8 @@ var dataSet = [
 	}
 ]
 
+var currentUser;
+
 app.use(morgan('dev')); // log requests to the console
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -43,16 +46,20 @@ router.get('/', function(req, res) {
 	res.json({message:'this is api'});
 });
 
-//login --return true if the login succeed
+//login --if login succeed, return the trip info
+	//  --if fail, return false
 router.get('/login/:user/:password',function(req,res){
 	getUser = dataSet.filter(x=>x.user == req.params.user && x.password == req.params.password)
-	res.json({result: getUser.length != 0 ? true: false})
+	currentUser = getUser.length != 0 ? getUser[0] : false
+	res.json({result: getUser.length != 0 ? getUser[0].trip : false})
 })
 
+
 //get the luggage id and return the weight and status
-router.route('/luggage/:luggageID')
+router.route('/trip/:tripID')
 	.get(function(req,res){
-		luggage = luggageList.filter(x=> x.luggageID ==req.params.luggageID );
+		trip = currentUser.filter(x=> x.trip.tripID == req.params.tripID );
+		trip = 
 		res.json({weight: luggage[0].weight,
 				status: luggage[0].status
 				});
@@ -60,13 +67,13 @@ router.route('/luggage/:luggageID')
 
 //the sensor retrieve the RFID 
 	//change status of the luggage based on the sensor location
-router.route('/luggage/:luggageID')
-	.get(function(req,res){
-		lug = luggageList.filter(x=> x.luggageID ==req.params.luggageID );
-		res.json({weight: lug[0].weight,
-				status: lug[0].status
-				});
-	});
+// router.route('/luggage/:luggageID')
+// 	.get(function(req,res){
+// 		lug = luggageList.filter(x=> x.luggageID ==req.params.luggageID );
+// 		res.json({weight: lug[0].weight,
+// 				status: lug[0].status
+// 				});
+// 	});
 
 
 // REGISTER OUR ROUTES -------------------------------
