@@ -42,7 +42,7 @@ var dataSet = [
 		'luggage':[{
 			'luggageID' : 1,
 			'weight': 10,
-			'status': 'Checked In',
+			'status': 'Check In',
 			'location': 'Hong Kong International Airport',
 			'timeline':[
 				{
@@ -65,7 +65,7 @@ var dataSet = [
 			},{
 			'luggageID' : 2,
 			'weight': 23,
-			'status': 'Checked In',
+			'status': 'Check In',
 			'location': 'Hong Kong International Airport',
 			'timeline':[
 				{
@@ -311,22 +311,7 @@ router.route('/sensor/:sensorID/:luggageID')
 		sensorStatus = sensorSet.filter(x => x.sensorID == req.params.sensorID);
 		sensorStatus = sensorStatus.length !=0 ? sensorStatus[0].status : undefined;
 		console.log("sensorID: " + req.params.sensorID)
-		switch(req.params.sensorID) {
-			case '1':
-				notification.push({type: 'success', content: 'A Luggage is checked in!'})
-				break;
-			case '2':
-				notification.push({type: 'success', content: 'A Luggage is on board!'})
-				break;
-			case '3':
-				notification.push({type: 'success', content: 'A Luggage is off board!'})
-				break;
-			case '4': 
-				notification.push({type: 'success', content: 'A Luggage is on the belt!'})
-				break;
-			default:
-				break;
-		}
+		
 
 		console.log(notification);
 		
@@ -354,6 +339,26 @@ router.route('/sensor/:sensorID/:luggageID')
 					}
 				}
 			}
+		}
+
+		var trips = user[0].trip;
+		trip = trips.filter(x=>x.tripID== tripID);
+
+		switch(req.params.sensorID) {
+			case '1':
+				notification.push({type: 'success', content: 'A Luggage is checked in!', trip: trip})
+				break;
+			case '2':
+				notification.push({type: 'success', content: 'A Luggage is on board!', trip: trips})
+				break;
+			case '3':
+				notification.push({type: 'success', content: 'A Luggage is off board!', trip: trips})
+				break;
+			case '4': 
+				notification.push({type: 'success', content: 'A Luggage is on the belt!', trip: trips})
+				break;
+			default:
+				break;
 		}
 	});
 
