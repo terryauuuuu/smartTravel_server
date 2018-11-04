@@ -326,6 +326,8 @@ router.route('/sensor/:sensorID/:luggageID')
 			default:
 				break;
 		}
+
+		console.log(notification);
 		
 		luggageList = dataSet[0].trip.filter(
 				y => y.luggage.filter(
