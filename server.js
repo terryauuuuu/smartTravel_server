@@ -261,6 +261,7 @@ router.get('/', function(req, res) {
 
 
 router.get('/notification', function(req,res){
+	console.log(notification);
 	if (notification.length !=0){
 		res.json(notification);
 		notification = [];
@@ -331,18 +332,18 @@ router.route('/sensor/:sensorID/:luggageID')
 		//get the sensor status
 		sensorStatus = sensorSet.filter(x => x.sensorID == req.params.sensorID);
 		sensorStatus = sensorStatus.length !=0 ? sensorStatus[0].status : undefined;
-		
-		switch(req.params.luggageID) {
-			case 1:
+		console.log("sensorID: " + req.params.sensorID)
+		switch(req.params.sensorID) {
+			case '1':
 				notification.push({type: 'success', content: 'The Luggage is checked in!<br>Check the details inside the app!'})
 				break;
-			case 2:
+			case '2':
 				notification.push({type: 'success', content: 'The Luggage is on board!<br>Check the details inside the app!'})
 				break;
-			case 3:
+			case '3':
 				notification.push({type: 'success', content: 'The Luggage is off board!<br>Please wait a moment before it proseed!!'})
 				break;
-			case 4: 
+			case '4': 
 				notification.push({type: 'success', content: 'The Luggage is on the belt!<br>Keep track the belt and get your luggage back!!'})
 				break;
 			default:
