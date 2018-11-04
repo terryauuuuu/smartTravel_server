@@ -313,16 +313,16 @@ router.route('/sensor/:sensorID/:luggageID')
 		console.log("sensorID: " + req.params.sensorID)
 		switch(req.params.sensorID) {
 			case '1':
-				notification.push({type: 'success', content: 'The Luggage is checked in!<br>Check the details inside the app!'})
+				notification.push({type: 'success', content: 'A Luggage is checked in!'})
 				break;
 			case '2':
-				notification.push({type: 'success', content: 'The Luggage is on board!<br>Check the details inside the app!'})
+				notification.push({type: 'success', content: 'A Luggage is on board!'})
 				break;
 			case '3':
-				notification.push({type: 'success', content: 'The Luggage is off board!<br>Please wait a moment before it proseed!!'})
+				notification.push({type: 'success', content: 'A Luggage is off board!'})
 				break;
 			case '4': 
-				notification.push({type: 'success', content: 'The Luggage is on the belt!<br>Keep track the belt and get your luggage back!!'})
+				notification.push({type: 'success', content: 'A Luggage is on the belt!'})
 				break;
 			default:
 				break;
