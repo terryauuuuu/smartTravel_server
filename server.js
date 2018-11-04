@@ -327,7 +327,7 @@ router.route('/sensor/:sensorID/:luggageID')
 		sensorStatus = sensorSet.filter(x => x.sensorID == req.params.sensorID);
 		sensorStatus = sensorStatus.length !=0 ? sensorStatus[0].status : undefined;
 		
-		switch(luggageID) {
+		switch(req.params.luggageID) {
 			case 1:
 				notification.push({type: 'warning', content: 'The Luggage is checked in!<br>Check the details inside the app!'})
 				break;
@@ -344,7 +344,7 @@ router.route('/sensor/:sensorID/:luggageID')
 				break;
 		}
 		
-		luggageList = dataset[0].trip.filter(
+		luggageList = dataSet[0].trip.filter(
 				y => y.luggage.filter(
 					z => z.luggageID ==req.params.luggageID)
 				)
@@ -354,7 +354,7 @@ router.route('/sensor/:sensorID/:luggageID')
 		if (tripID !== undefined){
 			var i=0, j=0,k=0, indx=[];
 			for ( i=0; i<dataSet.length; i++){
-				if (dataSet[i]==dataset[0]){
+				if (dataSet[i]==dataSet[0]){
 					for ( j=0; j<dataSet[i].trip.length; j++){
 						if (dataSet[i].trip[j].tripID==tripID){
 							for ( k=0; k<dataSet[i].trip[j].luggage.length; k++){
