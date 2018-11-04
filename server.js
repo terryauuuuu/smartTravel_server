@@ -23,8 +23,9 @@ var dataSet = [
 		'fromShort': 'BER',
 		'to': 'Hong Kong',
 		'toShort': 'HKG',
-		'toPicture' : 'src/src/hongkong.jpg',
+		'toPicture' : 'hongkong.jpeg',
 		'fromDate': '02Jan19 15:45',
+		'fromDateShort': '02 Jan',
 		'toDate': '02Jan19 18:20',
 		'PaggaeAllow': '32kg',
 		'luggagePic': [
@@ -81,15 +82,16 @@ var dataSet = [
 			'fromShort': 'HKG',
 			'to': 'Beijing',
 			'toShort': 'PEK',
-			'toPicture' : 'src/src/beijing.jpg',
-			'fromDate': '02Jan19 15:45',
-			'toDate': '02Jan19 18:20',
+			'toPicture' : 'beijing.png',
+			'fromDate': '04Jan19 15:45',
+			'fromDateShort': '04 Jan',
+			'toDate': '04Jan19 18:20',
 			'PaggaeAllow': '32kg',
 			'luggage':[{
 				'luggageID' : 3,
 				'weight': 5,
 				'status': 'onBoard',
-				'location': 'Hong Kong International Airport',
+				'location': 'Beijing Airport',
 				'timeline':[
 					{
 						'time': "02Jan19 18:20",
@@ -106,7 +108,7 @@ var dataSet = [
 				'luggageID' : 4,
 				'weight': 22,
 				'status': 'onBoard',
-				'location': 'Hong Kong International Airport',
+				'location': 'Beijing Airport',
 				'timeline':[
 					{
 						'time': "02Jan19 18:20",
@@ -130,8 +132,9 @@ var dataSet = [
 			'fromShort': 'NYC',
 			'to': 'Hong Kong',
 			'toShort': 'HKG',
-			'toPicture' : 'src/src/hongkong.jpg',
+			'toPicture' : 'hongkong.jpeg',
 			'fromDate': '02Jan18 15:45',
+			'fromDateShort': '02 Jan',
 			'toDate': '02Jan18 18:20',
 			'PaggaeAllow': '32kg',
 			'luggage':[{
@@ -177,9 +180,10 @@ var dataSet = [
 				'fromShort': 'HKG',
 				'to': 'Beijing',
 				'toShort': 'PEK',
-				'toPicture' : 'src/src/beijing.jpg',
-				'fromDate': '02Jan19 15:45',
-				'toDate': '02Jan19 18:20',
+				'toPicture' : 'beijing.png',
+				'fromDate': '04Jan19 15:45',
+				'fromDateShort': '04 Jan',
+				'toDate': '04Jan19 18:20',
 				'PaggaeAllow': '32kg',
 				'luggage':[{
 					'luggageID' : 33,
@@ -240,7 +244,7 @@ var sensorSet = [{
 
 var notification = []
 var currentUser;
-notification.push({type: 'warning', content: 'The Luggage is checked in!<br>Check the details inside the app!'})
+//notification.push({type: 'warning', content: 'The Luggage is checked in!<br>Check the details inside the app!'})
 app.use(morgan('dev')); // log requests to the console
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -260,7 +264,8 @@ router.get('/notification', function(req,res){
 	if (notification.length !=0){
 		res.json(notification);
 		notification = [];
-	}else{	
+	} else {
+		res.json(false)
 	}
 })
 
@@ -329,16 +334,16 @@ router.route('/sensor/:sensorID/:luggageID')
 		
 		switch(req.params.luggageID) {
 			case 1:
-				notification.push({type: 'warning', content: 'The Luggage is checked in!<br>Check the details inside the app!'})
+				notification.push({type: 'success', content: 'The Luggage is checked in!<br>Check the details inside the app!'})
 				break;
 			case 2:
-				notification.push({type: 'warning', content: 'The Luggage is on board!<br>Check the details inside the app!'})
+				notification.push({type: 'success', content: 'The Luggage is on board!<br>Check the details inside the app!'})
 				break;
 			case 3:
-				notification.push({type: 'warning', content: 'The Luggage is off board!<br>Please wait a moment before it proseed!!'})
+				notification.push({type: 'success', content: 'The Luggage is off board!<br>Please wait a moment before it proseed!!'})
 				break;
 			case 4: 
-				notification.push({type: 'warning', content: 'The Luggage is on the belt!<br>Keep track the belt and get your luggage back!!'})
+				notification.push({type: 'success', content: 'The Luggage is on the belt!<br>Keep track the belt and get your luggage back!!'})
 				break;
 			default:
 				break;
