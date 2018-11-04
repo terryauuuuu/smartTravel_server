@@ -42,7 +42,7 @@ var dataSet = [
 		'luggage':[{
 			'luggageID' : 1,
 			'weight': 10,
-			'status': 'onBoard',
+			'status': 'Checked In',
 			'location': 'Hong Kong International Airport',
 			'timeline':[
 				{
@@ -58,14 +58,14 @@ var dataSet = [
 					'details': "Offboard at HKG"
 				},
 				{
-					'time': '',
+					'time': '02 Jan19 14:35',
 					'details': "On belt at HKG"
 				}
 			]
 			},{
 			'luggageID' : 2,
 			'weight': 23,
-			'status': 'onBoard',
+			'status': 'Checked In',
 			'location': 'Hong Kong International Airport',
 			'timeline':[
 				{
