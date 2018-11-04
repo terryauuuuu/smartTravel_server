@@ -19,8 +19,8 @@ var dataSet = [
 		'tripID': 0,
 		'tripNumber' : 'CX5810',
 		'Class' : 'Economy',
-		'from': 'Berlin',
-		'fromShort': 'BER',
+		'from': 'Beijing',
+		'fromShort': 'PEK',
 		'to': 'Hong Kong',
 		'toShort': 'HKG',
 		'toPicture' : 'hongkong.jpeg',
@@ -43,34 +43,46 @@ var dataSet = [
 			'luggageID' : 1,
 			'weight': 10,
 			'status': 'onBoard',
-			'location': 'Berlin International Airport',
+			'location': 'Hong Kong International Airport',
 			'timeline':[
 				{
-					'time': "02Jan19 14:20",
+					'time': "02 Jan19 11:27",
+					'details': "Checked at PEK"
+				},
+				{
+					'time': "02 Jan19 12:40",
+					'details': "Onboard at PEK"
+				},
+				{
+					'time': "02 Jan19 14:20",
 					'details': "Offboard at HKG"
-				},{
-					'time': "02Jan19 12:40",
-					'details': "Onboard at BER"
-				},{
-					'time': "02Jan19 11:27",
-					'details': "Checked at BER"
+				},
+				{
+					'time': '',
+					'details': "On belt at HKG"
 				}
 			]
 			},{
 			'luggageID' : 2,
 			'weight': 23,
 			'status': 'onBoard',
-			'location': 'Berlin International Airport',
+			'location': 'Hong Kong International Airport',
 			'timeline':[
 				{
-					'time': "02Jan19 14:20",
+					'time': "02 Jan19 11:28",
+					'details': "Checked at PEK"
+				},
+				{
+					'time': "02 Jan19 12:41",
+					'details': "Onboard at PEK"
+				},
+				{
+					'time': "02 Jan19 14:20",
 					'details': "Offboard at HKG"
-				},{
-					'time': "02Jan19 12:40",
-					'details': "Onboard at BER"
-				},{
-					'time': "02Jan19 11:27",
-					'details': "Checked at BER"
+				},
+				{
+					'time': '',
+					'details': "On belt at HKG"
 				}
 			]
 			}]
@@ -87,41 +99,7 @@ var dataSet = [
 			'fromDateShort': '04 Jan',
 			'toDate': '04Jan19 18:20',
 			'PaggaeAllow': '32kg',
-			'luggage':[{
-				'luggageID' : 3,
-				'weight': 5,
-				'status': 'onBoard',
-				'location': 'Beijing Airport',
-				'timeline':[
-					{
-						'time': "02Jan19 18:20",
-						'details': "Offboard at PEK"
-					},{
-						'time': "02Jan19 15:40",
-						'details': "Onboard at HKG"
-					},{
-						'time': "02Jan19 13:27",
-						'details': "Checked at HKG"
-					}
-				]
-				},{
-				'luggageID' : 4,
-				'weight': 22,
-				'status': 'onBoard',
-				'location': 'Beijing Airport',
-				'timeline':[
-					{
-						'time': "02Jan19 18:20",
-						'details': "Offboard at PEK"
-					},{
-						'time': "02Jan19 15:40",
-						'details': "Onboard at HKG"
-					},{
-						'time': "02Jan19 13:27",
-						'details': "Checked at HKG"
-					}
-				]
-				}]
+			'luggage':[]
 			}
 		],
 		'tripHistory': [{
